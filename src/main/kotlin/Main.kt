@@ -1,5 +1,35 @@
 fun main(args: Array<String>) {
-   /* print("Введите кол-во строк: ")
+    while (true) {
+        println("Введите номер задачи (1-6, 0 - выход): ")
+        var choice = readln()
+        when (choice) {
+            "1" -> {
+                task1()
+            }
+
+            "2" -> {
+                task2()
+            }
+
+            "3" -> {
+                task3()
+            }
+
+            "4" -> {
+                task4()
+            }
+
+            "5" -> {
+                task5()
+            }
+
+            "0" -> return
+            else -> println("Введено неправильное значение")
+        }
+    }
+}
+private fun task1() {
+    print("Введите кол-во строк: ")
     val rows = readln().toInt()
     print("Введите кол-во столбцов: ")
     val cols = readln().toInt()
@@ -52,9 +82,9 @@ fun main(args: Array<String>) {
     }
 
     println("В массиве использовано ${countUnicNum.size} различных цифр")
-    */
-
-    /* val matrix = arrayOf(
+}
+private fun task2() {
+    val matrix = arrayOf(
         intArrayOf(5, 9, 6, 7, 2),
         intArrayOf(9, 8, 4, 5, 3),
         intArrayOf(6, 4, 3, 8, 7),
@@ -87,109 +117,114 @@ fun main(args: Array<String>) {
     } else {
         println("Матрица НЕ является симметричной относительно главной диагонали")
     }
-
-    val alphabet = listOf('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ь', 'Ы', 'Ъ', 'Э', 'Ю', 'Я')
-    val numbers = listOf(21, 13, 4, 20, 22, 1, 25, 12, 24, 14, 2, 28, 9, 23, 3, 29, 6, 16, 15, 11, 26, 5, 30, 27, 8, 18, 10, 33, 31, 32, 19, 7, 17)
-
-    println("Программа шифрования/дешифрования")
-    println("Выберите действие:")
-    println("1 - Зашифровать текст")
-    println("2 - Расшифровать текст")
-
-    when (readLine()?.toIntOrNull()) {
-        1 -> {
-            print("Введите текст для шифрования: ")
-            val text = readLine()?.uppercase() ?: ""
-            print("Введите ключевое слово: ")
-            val key = readLine()?.uppercase() ?: ""
-
-            val encrypted = encrypt(text, key, alphabet, numbers)
-            println("Зашифрованный текст: $encrypted")
-        }
-        2 -> {
-            print("Введите текст для дешифрования: ")
-            val text = readLine()?.uppercase() ?: ""
-            print("Введите ключевое слово: ")
-            val key = readLine()?.uppercase() ?: ""
-
-            val decrypted = decrypt(text, key, alphabet, numbers)
-            println("Расшифрованный текст: $decrypted")
-        }
-        else -> println("Неверный выбор")
-    }
 }
-fun encrypt(text: String, key: String, alphabet: List<Char>, numbers: List<Int>): String {
-    val result = StringBuilder()
-    val keyLength = key.length
+private fun task3() {
+        val alphabet = arrayOf('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ь', 'Ы', 'Ъ', 'Э', 'Ю', 'Я')
+        val numbers = arrayOf(21, 13, 4, 20, 22, 1, 25, 12, 24, 14, 2, 28, 9, 23, 3, 29, 6, 16, 15, 11, 26, 5, 30, 27, 8, 18, 10, 33, 31, 32, 19, 7, 17)
 
-    for ((index, char) in text.withIndex()) {
-        if (char == ' ') {
-            result.append(' ')
-            continue
-        }
+        println("Программа шифрования/дешифрования")
+        println("Выберите действие:")
+        println("1 - Зашифровать текст")
+        println("2 - Расшифровать текст")
 
-        val keyChar = key[index % keyLength]
-        val shift = getNumberByChar(keyChar, alphabet, numbers)
+        when (readLine()?.toIntOrNull()) {
+            1 -> {
+                print("Введите текст для шифрования: ")
+                val text = readLine()?.uppercase() ?: ""
+                print("Введите ключевое слово: ")
+                val key = readLine()?.uppercase() ?: ""
 
-        val currentNumber = getNumberByChar(char, alphabet, numbers)
-        val newNumber = ((currentNumber + shift - 1) % 33) + 1
+                val encrypted = encrypt(text, key, alphabet, numbers)
+                println("Зашифрованный текст: $encrypted")
+            }
+            2 -> {
+                print("Введите текст для дешифрования: ")
+                val text = readLine()?.uppercase() ?: ""
+                print("Введите ключевое слово: ")
+                val key = readLine()?.uppercase() ?: ""
 
-        result.append(getCharByNumber(newNumber, alphabet, numbers))
-    }
-
-    return result.toString()
-}
-
-fun decrypt(text: String, key: String, alphabet: List<Char>, numbers: List<Int>): String {
-    val result = StringBuilder()
-    val keyLength = key.length
-
-    for ((index, char) in text.withIndex()) {
-        if (char == ' ') {
-            result.append(' ')
-            continue
-        }
-
-        val keyChar = key[index % keyLength]
-        val shift = getNumberByChar(keyChar, alphabet, numbers)
-
-        val currentNumber = getNumberByChar(char, alphabet, numbers)
-        val newNumber = ((currentNumber - shift - 1 + 33) % 33) + 1
-
-        result.append(getCharByNumber(newNumber, alphabet, numbers))
-    }
-
-    return result.toString()
-}
-
-fun getNumberByChar(char: Char, alphabet: List<Char>, numbers: List<Int>): Int {
-    for (i in alphabet.indices) {
-        if (alphabet[i] == char) {
-            return numbers[i]
+                val decrypted = decrypt(text, key, alphabet, numbers)
+                println("Расшифрованный текст: $decrypted")
+            }
+            else -> println("Неверный выбор")
         }
     }
-    return 1
-}
-fun getCharByNumber(number: Int, alphabet: List<Char>, numbers: List<Int>): Char {
-    for (i in numbers.indices) {
-        if (numbers[i] == number) {
-            return alphabet[i]
-        }
-    }
-    return 'А'
 
+    fun encrypt(text: String, key: String, alphabet: Array<Char>, numbers: Array<Int>): String {
+        val result = StringBuilder()
+        val keyLength = key.length
+
+        for ((index, char) in text.withIndex()) {
+            if (char == ' ') {
+                result.append(' ')
+                continue
+            }
+
+            val keyChar = key[index % keyLength]
+            val shift = getNumberByChar(keyChar, alphabet, numbers)
+
+            val currentNumber = getNumberByChar(char, alphabet, numbers)
+            val newNumber = ((currentNumber + shift - 1) % 33) + 1
+
+            result.append(getCharByNumber(newNumber, alphabet, numbers))
+        }
+
+        return result.toString()
+    }
+
+    fun decrypt(text: String, key: String, alphabet: Array<Char>, numbers: Array<Int>): String {
+        val result = StringBuilder()
+        val keyLength = key.length
+
+        for ((index, char) in text.withIndex()) {
+            if (char == ' ') {
+                result.append(' ')
+                continue
+            }
+
+            val keyChar = key[index % keyLength]
+            val shift = getNumberByChar(keyChar, alphabet, numbers)
+
+            val currentNumber = getNumberByChar(char, alphabet, numbers)
+            val newNumber = ((currentNumber - shift - 1 + 33) % 33) + 1
+
+            result.append(getCharByNumber(newNumber, alphabet, numbers))
+        }
+
+        return result.toString()
+    }
+
+    fun getNumberByChar(char: Char, alphabet: Array<Char>, numbers: Array<Int>): Int {
+        for (i in alphabet.indices) {
+            if (alphabet[i] == char) {
+                return numbers[i]
+            }
+        }
+        return 1
+    }
+
+    fun getCharByNumber(number: Int, alphabet: Array<Char>, numbers: Array<Int>): Char {
+        for (i in numbers.indices) {
+            if (numbers[i] == number) {
+                return alphabet[i]
+            }
+        }
+        return 'А'
+    }
+
+private fun task4() {
     println("Введите первый массив чисел через пробел ")
-    val arr1 = readLine()!!.split(" ").map {it.toInt()}
+    val arr1 = readLine()!!.split(" ").map { it.toInt() }
 
     println("Введите второй массив чисел через пробел ")
-    val arr2 = readLine()!!.split(" ").map {it.toInt()}
+    val arr2 = readLine()!!.split(" ").map { it.toInt() }
 
 
     val result = mutableListOf<Int>()
     val copy = arr2.toMutableList()
 
-    for (num in arr1){
-        if (num in copy){
+    for (num in arr1) {
+        if (num in copy) {
             result.add(num)
             copy.remove(num)
 
@@ -199,46 +234,52 @@ fun getCharByNumber(number: Int, alphabet: List<Char>, numbers: List<Int>): Char
 
     println("Пересечение: ${resultArr.contentToString()}")
 
-     */
+}
+
+private fun task5() {
     fun main() {
         println("Введите слова через пробел:")
         val input = readLine()!!
-        val words = input.split(" ").filter { it.isNotBlank() }.toTypedArray()
 
-        // Массив для хранения ключей (отсортированные буквы)
-        val keys = Array(words.size) { i ->
-            words[i].toCharArray().sorted().joinToString("")
+        val words = input.split(" ")
+
+        val sortedWords = Array(words.size) { "" }
+
+        for (i in words.indices) {
+            val word = words[i]
+            val letters = word.toCharArray()
+            letters.sort()
+            sortedWords[i] = String(letters)
         }
 
-        // Массив для отметки использованных слов
         val used = BooleanArray(words.size) { false }
 
-        // Список для групп
         val groups = mutableListOf<Array<String>>()
-
-        // Проходим по всем словам
         for (i in words.indices) {
-            // Если слово еще не использовано
+
             if (!used[i]) {
-                // Создаем временный список для группы
-                val tempGroup = mutableListOf<String>()
-                tempGroup.add(words[i])
+
+                val currentGroup = mutableListOf<String>()
+
+                currentGroup.add(words[i])
+
                 used[i] = true
 
-                // Ищем слова с таким же ключом
                 for (j in i + 1 until words.size) {
-                    if (!used[j] && keys[i] == keys[j]) {
-                        tempGroup.add(words[j])
+
+                    if (!used[j] && sortedWords[i] == sortedWords[j]) {
+
+                        currentGroup.add(words[j])
+
                         used[j] = true
                     }
                 }
 
-                // Преобразуем список в массив и добавляем в группы
-                groups.add(tempGroup.toTypedArray())
+                groups.add(currentGroup.toTypedArray())
             }
         }
 
-        println("\nГруппы слов:")
+        println("\nГруппы слов с одинаковыми буквами:")
         for (group in groups) {
             println(group.joinToString(", "))
         }
