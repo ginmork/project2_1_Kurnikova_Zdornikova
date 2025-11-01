@@ -89,7 +89,7 @@ private fun task2() {
         intArrayOf(9, 8, 4, 5, 3),
         intArrayOf(6, 4, 3, 8, 7),
         intArrayOf(7, 5, 8, 4, 8),
-        intArrayOf(2, 3, 7, 8, 1)
+        intArrayOf(2, 3, 7, 9, 1)
     )
 
     println("Матрица:")
@@ -105,19 +105,20 @@ private fun task2() {
     for (i in 0 until n) {
         for (j in i + 1 until n) {
             if (matrix[i][j] != matrix[j][i]) {
-                check = false;
-            } else {
-                check = true;
+                check = false
+                break
             }
+            if (!check) break
         }
     }
 
-    if (check) {
-        println("Матрица является симметричной относительно главной диагонали")
-    } else {
-        println("Матрица НЕ является симметричной относительно главной диагонали")
+        if (check) {
+            println("Матрица является симметричной относительно главной диагонали")
+        } else {
+            println("Матрица НЕ является симметричной относительно главной диагонали")
+        }
     }
-}
+
 private fun task3() {
         val alphabet = arrayOf('А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ь', 'Ы', 'Ъ', 'Э', 'Ю', 'Я')
         val numbers = arrayOf(21, 13, 4, 20, 22, 1, 25, 12, 24, 14, 2, 28, 9, 23, 3, 29, 6, 16, 15, 11, 26, 5, 30, 27, 8, 18, 10, 33, 31, 32, 19, 7, 17)
@@ -246,7 +247,6 @@ private fun task4() {
 }
 
 private fun task5() {
-    fun main() {
         println("Введите слова через пробел:")
         val input = readLine()!!
 
@@ -293,4 +293,3 @@ private fun task5() {
             println(group.joinToString(", "))
         }
     }
-}
