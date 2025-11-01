@@ -1,6 +1,6 @@
 fun main(args: Array<String>) {
     while (true) {
-        println("Введите номер задачи (1-6, 0 - выход): ")
+        println("Введите номер задачи (1-5, 0 - выход): ")
         var choice = readln()
         when (choice) {
             "1" -> {
@@ -214,25 +214,34 @@ private fun task3() {
 
 private fun task4() {
     println("Введите первый массив чисел через пробел ")
-    val arr1 = readLine()!!.split(" ").map { it.toInt() }
+    val input1 = readLine()!!
+    val arr1 = mutableListOf<Int>()
+    for (numStr in input1.split(" ")) {
+        if (numStr.isNotEmpty()) {
+            arr1.add(numStr.toInt())
+        }
+    }
 
     println("Введите второй массив чисел через пробел ")
-    val arr2 = readLine()!!.split(" ").map { it.toInt() }
-
+    val input2 = readLine()!!
+    val arr2 = mutableListOf<Int>()
+    for (numStr in input2.split(" ")) {
+        if (numStr.isNotEmpty()) {
+            arr2.add(numStr.toInt())
+        }
+    }
 
     val result = mutableListOf<Int>()
     val copy = arr2.toMutableList()
 
     for (num in arr1) {
-        if (num in copy) {
+        if (copy.contains(num)) {
             result.add(num)
             copy.remove(num)
-
         }
     }
-    val resultArr = result.toIntArray()
 
-    println("Пересечение: ${resultArr.contentToString()}")
+    println("Пересечение: ${result.toIntArray().contentToString()}")
 
 }
 
