@@ -1,4 +1,4 @@
-fun main(args: Array<Int>) {
+fun main(args: Array<String>) {
    /* print("Введите кол-во строк: ")
     val rows = readln().toInt()
     print("Введите кол-во столбцов: ")
@@ -177,12 +177,13 @@ fun getCharByNumber(number: Int, alphabet: List<Char>, numbers: List<Int>): Char
         }
     }
     return 'А'
-    */
+
     println("Введите первый массив чисел через пробел ")
     val arr1 = readLine()!!.split(" ").map {it.toInt()}
 
     println("Введите второй массив чисел через пробел ")
     val arr2 = readLine()!!.split(" ").map {it.toInt()}
+
 
     val result = mutableListOf<Int>()
     val copy = arr2.toMutableList()
@@ -191,6 +192,55 @@ fun getCharByNumber(number: Int, alphabet: List<Char>, numbers: List<Int>): Char
         if (num in copy){
             result.add(num)
             copy.remove(num)
+
+        }
+    }
+    val resultArr = result.toIntArray()
+
+    println("Пересечение: ${resultArr.contentToString()}")
+
+     */
+    fun main() {
+        println("Введите слова через пробел:")
+        val input = readLine()!!
+        val words = input.split(" ").filter { it.isNotBlank() }.toTypedArray()
+
+        // Массив для хранения ключей (отсортированные буквы)
+        val keys = Array(words.size) { i ->
+            words[i].toCharArray().sorted().joinToString("")
+        }
+
+        // Массив для отметки использованных слов
+        val used = BooleanArray(words.size) { false }
+
+        // Список для групп
+        val groups = mutableListOf<Array<String>>()
+
+        // Проходим по всем словам
+        for (i in words.indices) {
+            // Если слово еще не использовано
+            if (!used[i]) {
+                // Создаем временный список для группы
+                val tempGroup = mutableListOf<String>()
+                tempGroup.add(words[i])
+                used[i] = true
+
+                // Ищем слова с таким же ключом
+                for (j in i + 1 until words.size) {
+                    if (!used[j] && keys[i] == keys[j]) {
+                        tempGroup.add(words[j])
+                        used[j] = true
+                    }
+                }
+
+                // Преобразуем список в массив и добавляем в группы
+                groups.add(tempGroup.toTypedArray())
+            }
+        }
+
+        println("\nГруппы слов:")
+        for (group in groups) {
+            println(group.joinToString(", "))
         }
     }
 }
